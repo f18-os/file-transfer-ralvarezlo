@@ -50,12 +50,12 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
-outMessage = "Hello world!"
+outMessage = "Hello world!\n"
 
 print("sending '%s'" % outMessage)
 s.send(outMessage.encode())
 
-data = s.recv(1024).decode()
+data = s.recv(100).decode()
 print("Received '%s'" % data)
 
 print("sending '%s'" % outMessage)
@@ -64,7 +64,7 @@ s.send(outMessage.encode())
 s.shutdown(socket.SHUT_WR)      # no more output
 
 while 1:
-    data = s.recv(1024).decode()
+    data = s.recv(100).decode()
     print("Received '%s'" % data)
     if len(data) == 0:
         break

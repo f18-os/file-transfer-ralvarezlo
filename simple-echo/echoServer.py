@@ -29,11 +29,16 @@ s.listen(1)              # allow only one outstanding request
 
 conn, addr = s.accept()  # wait until incoming connection request (and accept it)
 print('Connected by', addr)
+
+data = ""
 while 1:
-    data = conn.recv(1024).decode()
-    if not data: break
-    sendMsg = "Echoing %s" % data
+    dataRec = conn.recv(100).decode().replace('\n','')
+    if not dataRec: break
+    data += dataRec
+    sendMsg = "Echoing %s" % dataRec
     print("Received '%s', sending '%s'" % (data, sendMsg))
-    conn.send(sendMsg.encode())
+    while len(sendMsg):
+        numBytes = conn.send(sendMsg.encode())
+        sendMsg = sendMsg[numBytes:0]
 conn.close()
 

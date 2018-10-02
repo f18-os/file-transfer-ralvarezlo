@@ -43,7 +43,7 @@ for res in socket.getaddrinfo(serverHost, serverPort, socket.AF_UNSPEC, socket.S
         s = None
         continue
     try:
-        print(" attempting to connect to %s" % repr(sa))
+        print("attempting to connect to %s" % repr(sa))
         s.connect(sa)
     except socket.error as msg:
         print(" error: %s" % msg)
@@ -58,12 +58,9 @@ if s is None:
 
 fname = "declaration.txt"
 myFile = open(fname,'r')
-auxArr = myFile.read().split('\n')
-framedSend(s, fname.encode(), debug)
-for i in range(len(auxArr)):
-    auxArr[i] = auxArr[i].encode()
-    print(auxArr[i])
-    framedSend(s, auxArr[i], debug)
+auxStr = myFile.read().replace("\n", "\0")
+auxStr = fname + "//myname"+ auxStr + '\n'
+framedSend(s, auxStr.encode(), debug)
 
-payload = framedReceive(s, debug)
+payload = framedReceive(s, debug).decode().replace("\00", "\n")
 print(payload)
