@@ -56,11 +56,8 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
-fname = "declaration.txt"
+fname = input("Please input name: ")
 myFile = open(fname,'r')
 auxStr = myFile.read().replace("\n", "\0")
 auxStr = fname + "//myname"+ auxStr + '\n'
 framedSend(s, auxStr.encode(), debug)
-
-payload = framedReceive(s, debug).decode().replace("\00", "\n")
-print(payload)

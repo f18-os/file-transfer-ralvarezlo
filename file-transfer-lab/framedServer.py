@@ -40,6 +40,7 @@ while True:
         myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
         with open(myPath, 'w') as file:
             file.write(auxStrArr[1])
+            file.close()
         break
     payload += b"!"             # make emphatic!
     framedSend(sock, payload, debug)
