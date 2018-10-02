@@ -30,10 +30,16 @@ print("connection rec'd from", addr)
 
 from framedSock import framedSend, framedReceive
 
+fileString = ""
 while True:
     payload = framedReceive(sock, debug)
+    print("payloadtype: ", type(payload))
     if debug: print("rec'd: ", payload)
-    if not payload:
+    if payload: fileString += payload.decode().replace("\x00", "\n")
+    else:
+        auxStrArr = fileString.split("//myname")
+        print("length", len(auxStrArr))
+        print(fileString)
         break
     payload += b"!"             # make emphatic!
     framedSend(sock, payload, debug)
