@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-import sys, re, socket
+import sys, re, socket, os
 sys.path.append("../lib")       # for params
 import params
 
@@ -33,13 +33,13 @@ from framedSock import framedSend, framedReceive
 fileString = ""
 while True:
     payload = framedReceive(sock, debug)
-    print("payloadtype: ", type(payload))
     if debug: print("rec'd: ", payload)
     if payload: fileString += payload.decode().replace("\x00", "\n")
     else:
         auxStrArr = fileString.split("//myname")
-        print("length", len(auxStrArr))
-        print(fileString)
+        myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
+        with open(myPath, 'w') as file:
+            file.write(auxStrArr[1])
         break
     payload += b"!"             # make emphatic!
     framedSend(sock, payload, debug)
