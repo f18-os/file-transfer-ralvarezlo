@@ -41,6 +41,6 @@ while True:
                 with open(myPath, 'w') as file:
                     file.write(auxStrArr[1])
                     file.close()
-                    sys.exit(1)
+                break
             payload += b"!"             # make emphatic!
             framedSend(sock, payload, debug)

@@ -58,6 +58,10 @@ if s is None:
 
 fname = input("Please input name: ")
 myFile = open(fname,'r')
+
 auxStr = myFile.read().replace("\n", "\0")
+myFile.close()
 auxStr = fname + "//myname"+ auxStr + '\n'
 framedSend(s, auxStr.encode(), debug)
+
+framedReceive(s,debug) #Doesn't use the output,just want to make sure the file is completely sent before the filecloses

@@ -38,7 +38,7 @@ while 1:
     sendMsg = "Echoing %s" % dataRec
     print("Received '%s', sending '%s'" % (data, sendMsg))
     while len(sendMsg):
-        numBytes = conn.send(sendMsg.encode())
-        sendMsg = sendMsg[numBytes:0]
+        bytesSent = conn.send(sendMsg.encode())
+        sendMsg = sendMsg[bytesSent:]
 conn.close()
 
