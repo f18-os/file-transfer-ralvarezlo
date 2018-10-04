@@ -1,0 +1,3 @@
+-Talked about the file input on the fileClient.py, replacing the \n with null characters and
+and appending the filename along with a separator with Eduardo Lara
+- Call "find" method recommended by Miguel Zamudio
