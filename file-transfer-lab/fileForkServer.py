@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import sys, os, socket
+from subprocess import call
 sys.path.append("../lib")       # for params
 import params
 
@@ -38,6 +39,9 @@ while True:
             else:
                 auxStrArr = fileString.split("//myname")
                 myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
+                if not (call(["find", myPath])):
+                    auxStrArr[0] = input("File already exists, please input new name for the file received: ")
+                    myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
                 with open(myPath, 'w') as file:
                     file.write(auxStrArr[1])
                     file.close()

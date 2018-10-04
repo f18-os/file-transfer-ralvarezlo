@@ -37,6 +37,8 @@ while True:
             if payload: fileString += payload.decode().replace("\x00", "\n")
             else:
                 auxStrArr = fileString.split("//myname")
+                if os.path.exists(os.path.join(os.getcwd()+"/receiving/"+ auxStrArr[0])):
+                    print("Have to overwrite")
                 myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
                 with open(myPath, 'w') as file:
                     file.write(auxStrArr[1])

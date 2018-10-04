@@ -7,10 +7,20 @@ sys.path.append("../lib")       # for params
 import params
 
 from framedSock import framedSend, framedReceive
+myHost = "50001"
+while (1):
+    userAns = input("Use proxy(\"p\") or local host 50001(\"l\")?")
+    if(userAns=="p"):
+        myHost = "50000"
+        break
+    elif(userAns=="l"):
+        myHost = "50001"
+        break
+    else: print("Invalid selection, try again")
 
 
 switchesVarDefaults = (
-    (('-s', '--server'), 'server', "127.0.0.1:50001"),
+    (('-s', '--server'), 'server', ("127.0.0.1:"+ myHost)),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
     )
@@ -56,12 +66,17 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
-fname = input("Please input name: ")
-myFile = open(fname,'r')
+while (1):
+    try:
+        fname = input("Please input name: ")
+        myFile = open(fname,'r')
+        break
+    except IOError:
+        print("File doesn't exist, try again.")
 
 auxStr = myFile.read().replace("\n", "\0")
 myFile.close()
-auxStr = fname + "//myname"+ auxStr + '\n'
+auxStr = fname + "//myname"+auxStr  + '\n'
 framedSend(s, auxStr.encode(), debug)
 
 framedReceive(s,debug) #Doesn't use the output,just want to make sure the file is completely sent before the filecloses
