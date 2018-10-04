@@ -1,4 +1,4 @@
-#File Transfer Lab
+# File Transfer Lab
 It's a simple file transfer protocol which opens the files from the client and transfers it to the server
 into the "received" folder.
 
