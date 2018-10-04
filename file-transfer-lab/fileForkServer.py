@@ -36,13 +36,13 @@ while True:
             payload = framedReceive(sock, debug)
             if debug: print("rec'd: ", payload)
             if payload: fileString += payload.decode().replace("\x00", "\n")
-            else:
+            else: # When stopped receiving write to the file
                 auxStrArr = fileString.split("//myname")
-                myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
-                if not (call(["find", myPath])):
-                    auxStrArr[0] = input("File already exists, please input new name for the file received: ")
+                myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0]) #Join path to set it to the receiving folder
+                if not (call(["find", myPath])): #if file already exists then ask the user to specify a new file
+                    auxStrArr[0] = input("File " , auxStrArr[0], "already exists, please input new name for the file received: ")
                     myPath = os.path.join(os.getcwd()+"/receiving/"+auxStrArr[0])
-                with open(myPath, 'w') as file:
+                with open(myPath, 'w') as file: #open and write to file
                     file.write(auxStrArr[1])
                     file.close()
                 break

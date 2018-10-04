@@ -7,6 +7,7 @@ sys.path.append("../lib")       # for params
 import params
 
 from framedSock import framedSend, framedReceive
+#Ask the user if they want to use the proxy or the default local host
 myHost = "50001"
 while (1):
     userAns = input("Use proxy(\"p\") or local host 50001(\"l\")?")
@@ -66,7 +67,9 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
+#Open the file to be read, repeat until correct
 while (1):
+    
     try:
         fname = input("Please input name: ")
         myFile = open(fname,'r')
@@ -74,9 +77,9 @@ while (1):
     except IOError:
         print("File doesn't exist, try again.")
 
-auxStr = myFile.read().replace("\n", "\0")
+auxStr = myFile.read().replace("\n", "\0") #replace new lines to null characters
 myFile.close()
-auxStr = fname + "//myname"+auxStr  + '\n'
-framedSend(s, auxStr.encode(), debug)
+auxStr = fname + "//myname"+auxStr  + '\n' #Added the //myname to distinguish between file name and body
+framedSend(s, auxStr.encode(), debug) #send the encoded string
 
 framedReceive(s,debug) #Doesn't use the output,just want to make sure the file is completely sent before the filecloses
